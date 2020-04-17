@@ -17,7 +17,7 @@ namespace RepconWeb.Pages.Shared
         public EditPCModel(RepconContext db) => _context = db;
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            Pc = _context.Pc.AsNoTracking().ToList();
+            Pc = _context.Pc.ToList();
             Pc.Reverse();
             PcItem = await _context.Pc.FindAsync(id);
             return Page();
@@ -69,5 +69,10 @@ namespace RepconWeb.Pages.Shared
             }
             return RedirectToPage();
         }
+
+        public int? GetClassNum(int crid) => _context.Classroom.Where(v => v.CrId == crid).FirstOrDefault().ClassNum;
+
+        public int? GetPlaceNum(int crid) => _context.Classroom.Where(v => v.CrId == crid).FirstOrDefault().PlaceNum;
+
     }
 }
