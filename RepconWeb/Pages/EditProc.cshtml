@@ -1,0 +1,169 @@
+﻿@page
+@model RepconWeb.Pages.Shared.EditProcModel
+@{
+    ViewData["Title"] = "Edit Process";
+}
+
+<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#newItemModal">Add program</button>
+<p />
+
+<div class="text-center">
+    <table id="ProcessTable" class="table table-hover" cellspacing="0">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Size</th>
+                <th scope="col">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var proc in Model.Processes)
+            {
+                <tr>
+                    <td>@proc.Name</td>
+                    <td>@proc.Description</td>
+                    <td>@proc.Status</td>
+                    <td>@proc.Size</td>
+                    <td>
+                        <form method="post">
+                            <button type="button"
+                                    class="btn btn-info"
+                                    onclick="editRow(@proc.ProcId, '@proc.Name', '@proc.Description', '@proc.Status', @proc.Size)">
+                                Edit
+                            </button>
+                            <button type="submit" class="btn btn-info" data-toggle="modal"
+                                    asp-page-handler="delete" asp-route-id="@proc.ProcId">
+                                Remove
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@*modal form for adding*@
+<div class="modal" id="newItemModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div asp-validation-summary="All"></div>
+        <input asp-for="ProcessItem.ProcId" type="hidden" />
+        <input type="hidden" name="_method" value="put" />
+        <form class="modal-content" method="post">
+            <input type="hidden" name="_method" value="post" />
+            <div class="modal-header">
+                <h5 class="modal-title">Add program</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="nameInput">Name</label>
+                    <input type="text" class="form-control" name="name" id="nameInput" asp-for="ProcessItem.Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descriptionInput">Description</label>
+                    <input type="text" class="form-control" name="description" id="descriptionInput" asp-for="ProcessItem.Description">
+                </div>
+
+                <div class="form-group">
+                    <label for="statusInput">Status</label>
+                    @*<input type="text" class="form-control" name="status" id="statusInput" asp-for="ProcessItem.Status" required>*@
+                    <select class="form-control" name="status" id="statusField" asp-for="ProcessItem.Status" required>
+                        <option value="Не извесный">Не извесный</option>
+                        <option value="Извесный">Извесный</option>
+                        <option value="Запрещенный">Запрещенный</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sizeInput">Size</label>
+                    <input type="text" class="form-control" name="size" id="sizeInput" asp-for="ProcessItem.Size" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Add" style="float:right" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@* modal form for editing *@
+<div class="modal" id="editItemModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div asp-validation-summary="All"></div>
+
+        <form class="modal-content" method="post">
+            <input type="hidden" name="_method" value="put" />
+            <input type="hidden" name="_id" id="editItemId" />
+            <div class="modal-header">
+                <h5 class="modal-title">Edit programm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Name</label>
+                    <div>
+                        <input type="text" id="nameField" class="form-control" name="name" asp-for="ProcessItem.Name" required>
+                        <span asp-validation-for="ProcessItem.Name" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <div>
+                        <input type="text" id="descrField" class="form-control" name="description" asp-for="ProcessItem.Description">
+                        <span asp-validation-for="ProcessItem.Description" />
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+                    <div>
+                        @* <input type="text" id="statusField" class="form-control" name="status" asp-for="ProcessItem.Status" required>*@
+                        <span asp-validation-for="ProcessItem.Status" />
+                        <select class="form-control" name="status" id="statusField" asp-for="ProcessItem.Status" required>
+                            <option value="Не извесный">Не извесный</option>
+                            <option value="Извесный">Извесный</option>
+                            <option value="Запрещенный">Запрещенный</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Size</label>
+                    <div>
+                        <input type="text" id="sizeField" class="form-control" name="size" asp-for="ProcessItem.Size" required>
+                        <span asp-validation-for="ProcessItem.Size" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Save" style="float:right" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function editRow(id, name, description, status, size) {
+        $('#editItemId').val(id);
+
+        $('#nameField').val(name);
+        $('#descrField').val(description);
+        $('#statusField').val(status);
+        $('#sizeField').val(size);
+
+        $('#editItemModal').modal('toggle');
+    }
+
+</script>
+

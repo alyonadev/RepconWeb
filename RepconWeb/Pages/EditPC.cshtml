@@ -1,0 +1,165 @@
+﻿@page
+@model RepconWeb.Pages.Shared.EditPCModel
+@{
+    ViewData["Title"] = "Edit PC";
+}
+
+<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#newItemModal">Add PC</button>
+<p />
+
+<div class="text-center">
+    <table id="PcTable" class="table table-hover" cellspacing="0">
+        <thead>
+            <tr>
+                <th scope="col">Type</th>
+                <th scope="col">MAC addres</th>
+                <th scope="col">Classroom</th>
+                <th scope="col">Place</th>
+                <th scope="col">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pc in Model.Pc)
+            {
+                <tr>                    
+                    <td>@pc.PcType</td>
+                    <td>@pc.Macaddr</td>
+                    <td>@pc.CrId</td>
+                    <td>@pc.CrId</td>
+                    <td>
+                        <form method="post">
+                            <button type="button"
+                                    class="btn btn-info"
+                                    onclick="editRow(@pc.PcId, '@pc.PcType', '@pc.Macaddr', '@pc.CrId', '@pc.CrId')">
+                                Edit
+                            </button>
+                            <button type="submit" class="btn btn-info" data-toggle="modal"
+                                    asp-page-handler="delete" asp-route-id="@pc.PcId">
+                                Remove
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@*modal form for adding*@
+<div class="modal" id="newItemModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div asp-validation-summary="All"></div>
+        <input asp-for="PcItem.PcId" type="hidden" />
+        <input type="hidden" name="_method" value="put" />
+        <form class="modal-content" method="post">
+            <input type="hidden" name="_method" value="post" />
+            <div class="modal-header">
+                <h5 class="modal-title">Add PC</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="typeInput">Type</label>
+                    @*<input type="text" class="form-control" name="type" id="typeInput" asp-for="PcItem.PcType" required>*@
+                    <select class="form-control" name="pctype" id="pctype" asp-for="PcItem.PcType" required>
+                        <option value="Компьютер">Компьютер</option>
+                        <option value="Ноутбук">Ноутбук</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="macaddrInput">MAC addres</label>
+                    <input type="text" class="form-control" name="macaddr" id="macaddrInput" asp-for="PcItem.Macaddr" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="classroomInput">Classroom</label>
+                    <input type="text" class="form-control" name="crid" id="crid" asp-for="PcItem.CrId">
+                </div>
+
+                <div class="form-group">
+                    <label for="classroomInput">Place</label>
+                    <input type="text" class="form-control" name="crid" id="crid" asp-for="PcItem.CrId">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Add" style="float:right" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@* modal form for editing *@
+<div class="modal" id="editItemModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div asp-validation-summary="All"></div>
+
+        <form class="modal-content" method="post">
+            <input type="hidden" name="_method" value="put" />
+            <input type="hidden" name="_id" id="editItemId" />
+            <div class="modal-header">
+                <h5 class="modal-title">Edit PC</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Type</label>
+                    <div>
+                        @*<input type="text" id="typeField" class="form-control" name="type" asp-for="PcItem.PcType" required>*@
+                        <span asp-validation-for="PcItem.PcType" />
+                        <select class="form-control" name="pctype" id="typeField" asp-for="PcItem.PcType" required>
+                            <option value="Компьютер">Компьютер</option>
+                            <option value="Ноутбук">Ноутбук</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label>MAC addres</label>
+                    <div>
+                        <input type="text" id="macaddrField" class="form-control" name="macaddr" asp-for="PcItem.Macaddr" required>
+                        <span asp-validation-for="PcItem.Macaddr" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Classroom</label>
+                    <div>
+                        <input type="text" id="classroomField" class="form-control" name="crid" asp-for="PcItem.CrId">
+                        <span asp-validation-for="PcItem.CrId" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Place</label>
+                    <div>
+                        <input type="text" id="classroomField" class="form-control" name="crid" asp-for="PcItem.CrId">
+                        <span asp-validation-for="PcItem.CrId" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Save" style="float:right" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function editRow(id, classroom, type, macaddr) {
+        $('#editItemId').val(id);
+                
+        $('#typeField').val(type);
+        $('#macaddrField').val(macaddr);
+        $('#classroomField').val(classroom);
+        $('#classroomField').val(classroom);
+
+        $('#editItemModal').modal('toggle');
+    }
+
+</script>
