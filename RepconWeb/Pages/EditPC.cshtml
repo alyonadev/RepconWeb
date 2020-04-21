@@ -30,7 +30,7 @@
                         <form method="post">
                             <button type="button"
                                     class="btn btn-info"
-                                    onclick="editRow(@pc.PcId, '@pc.PcType', '@pc.Macaddr', '@Model.GetClassNum(pc.CrId.GetValueOrDefault())', '@Model.GetPlaceNum(pc.CrId.GetValueOrDefault())')">
+                                    onclick="editRow(@pc.PcId, '@pc.PcType', '@pc.Macaddr', @Model.GetClassNum(pc.CrId.GetValueOrDefault()), @Model.GetPlaceNum(pc.CrId.GetValueOrDefault()))">
                                 Edit
                             </button>
                             <button type="submit" class="btn btn-info" data-toggle="modal"
@@ -44,6 +44,7 @@
         </tbody>
     </table>
 </div>
+
 @*modal form for adding*@
 <div class="modal" id="newItemModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -60,9 +61,8 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="typeInput">Type</label>
-                    @*<input type="text" class="form-control" name="type" id="typeInput" asp-for="PcItem.PcType" required>*@
-                    <select class="form-control" name="pctype" id="pctype" asp-for="PcItem.PcType" required>
+                    <label for="pctypeInput">Type</label>
+                    <select class="form-control" name="pctype" id="pctypeInput" asp-for="PcItem.PcType" required>
                         <option value="Компьютер">Компьютер</option>
                         <option value="Ноутбук">Ноутбук</option>
                     </select>
@@ -74,13 +74,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="classroomInput">Classroom</label>
-                    <input type="text" class="form-control" name="crid" id="crid" asp-for="PcItem.CrId">
+                    <label for="classnumInput">Classroom</label>
+                    <input type="text" class="form-control" name="_classnum" id="classnumInput" asp-for="PcItem.CrId">
                 </div>
 
                 <div class="form-group">
-                    <label for="classroomInput">Place</label>
-                    <input type="text" class="form-control" name="crid" id="crid" asp-for="PcItem.CrId">
+                    <label for="placenumInput">Place</label>
+                    <input type="text" class="form-control" name="_placenum" id="placenumInput" asp-for="PcItem.CrId">
                 </div>
             </div>
             <div class="modal-footer">
@@ -90,7 +90,7 @@
     </div>
 </div>
 
-@* modal form for editing *@
+@* modal form for editing*@
 <div class="modal" id="editItemModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div asp-validation-summary="All"></div>
@@ -108,9 +108,8 @@
                 <div class="form-group">
                     <label>Type</label>
                     <div>
-                        @*<input type="text" id="typeField" class="form-control" name="type" asp-for="PcItem.PcType" required>*@
                         <span asp-validation-for="PcItem.PcType" />
-                        <select class="form-control" name="pctype" id="typeField" asp-for="PcItem.PcType" required>
+                        <select class="form-control" name="pctype" id="pctypeField" asp-for="PcItem.PcType" required>
                             <option value="Компьютер">Компьютер</option>
                             <option value="Ноутбук">Ноутбук</option>
                         </select>
@@ -129,7 +128,7 @@
                 <div class="form-group">
                     <label>Classroom</label>
                     <div>
-                        <input type="text" id="classroomField" class="form-control" name="crid" asp-for="PcItem.CrId">
+                        <input type="text" id="classnumField" class="form-control" name="_classnum" asp-for="PcItem.CrId">
                         <span asp-validation-for="PcItem.CrId" />
                     </div>
                 </div>
@@ -137,7 +136,7 @@
                 <div class="form-group">
                     <label>Place</label>
                     <div>
-                        <input type="text" id="classroomField" class="form-control" name="crid" asp-for="PcItem.CrId">
+                        <input type="text" id="placenumField" class="form-control" name="_placenum" asp-for="PcItem.CrId">
                         <span asp-validation-for="PcItem.CrId" />
                     </div>
                 </div>
@@ -151,13 +150,13 @@
 
 <script type="text/javascript">
 
-    function editRow(id, classroom, type, macaddr) {
+    function editRow(id, pctype, macaddr, classnum, placenum) {
         $('#editItemId').val(id);
 
-        $('#typeField').val(type);
+        $('#pctypeField').val(pctype);
         $('#macaddrField').val(macaddr);
-        $('#classroomField').val(classroom);
-        $('#classroomField').val(classroom);
+        $('#classnumField').val(classnum);
+        $('#placenumField').val(placenum);
 
         $('#editItemModal').modal('toggle');
     }

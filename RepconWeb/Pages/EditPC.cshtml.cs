@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -27,14 +28,29 @@ namespace RepconWeb.Pages.Shared
             if (!ModelState.IsValid) return Page();
             string mode = Request.Form["_method"];
 
+            string classnum = Request.Form["_classnum"];
+            string placenum = Request.Form["_placenum"];
+
             switch (mode)
             {
                 case "post":
                 default:
                     try
                     {
-                        var lastID = _context.Pc.Max<Pc>(v => v.PcId);
-                        PcItem.PcId = ++lastID;
+                        var lastCrID = _context.Classroom.Max<Classroom>(v => v.CrId);
+
+                        var lastPCID = _context.Pc.Max<Pc>(v => v.PcId);
+                        PcItem.PcId = ++lastPCID;
+
+                        Classroom CrItem = new Classroom()
+                        {
+                            CrId = ++lastCrID,
+                            ClassNum = Convert.ToInt32(classnum),
+                            PlaceNum = Convert.ToInt32(placenum)
+                        };
+                                                                                                       
+                        _context.Classroom.Add(CrItem);
+                        PcItem.CrId = CrItem.CrId;
                         _context.Pc.Add(PcItem);
                     }
                     catch (DbUpdateConcurrencyException) { }
@@ -48,9 +64,15 @@ namespace RepconWeb.Pages.Shared
                             PcItem.PcId = id;
                             var has = _context.Pc.Where(e => e.PcId == id);
                             if (has != null)
+                            {
+
                                 _context.Pc.Update(PcItem);
+                            }
                             else
+                            {
+                                
                                 _context.Pc.Add(PcItem);
+                            }                                
                         }
                     }
                     catch (DbUpdateConcurrencyException) { }
@@ -73,6 +95,5 @@ namespace RepconWeb.Pages.Shared
         public int? GetClassNum(int crid) => _context.Classroom.Where(v => v.CrId == crid).FirstOrDefault().ClassNum;
 
         public int? GetPlaceNum(int crid) => _context.Classroom.Where(v => v.CrId == crid).FirstOrDefault().PlaceNum;
-
     }
 }
