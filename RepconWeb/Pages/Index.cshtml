@@ -1,8 +1,44 @@
 ﻿@page
-
-@model IndexModel
+@model RepconWeb.Pages.IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
+<form method="post">
+    <div class="card" style="width: 24rem; float: left">
+        <div class="card-body">
+            <div>
+                <label>Login</label>
+                <input type="text" class="form-control" name="log" asp-for="SessionItem.Login">
+            </div>
 
-<h1>Report</h1>
+            <div>
+                <label>Classroom</label>
+                <input type="text" class="form-control" name="crnum" asp-for="CrItem.ClassNum">
+            </div>
+
+            <div>
+                <label>Place</label>
+                <input type="text" class="form-control" name="placenum" asp-for="CrItem.PlaceNum">
+            </div>
+
+            <div>
+                <label>Process</label>
+                <input type="text" class="form-control" name="proc" asp-for="ProcItem.Name">
+            </div>
+
+            <div class="md-form md-outline input-with-post-icon datepicker">
+                <label>Start session</label>
+                <input type="date" class="form-control" name="startT">
+            </div>
+
+            <div class="md-form md-outline input-with-post-icon datepicker">
+                <label>End session</label>
+                <input type="date" class="form-control" name="endT">
+            </div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" class="btn btn-primary" value="Create" style="float:right" />
+        </div>
+    </div>
+</form>
+
