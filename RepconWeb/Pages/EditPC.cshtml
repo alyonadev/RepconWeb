@@ -4,18 +4,18 @@
     ViewData["Title"] = "Edit PC";
 }
 
-<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#newItemModal">Add PC</button>
+<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#newItemModal">Добавить ПК</button>
 <p />
 
 <div class="text-center">
     <table id="PcTable" class="table table-hover" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col">Type</th>
-                <th scope="col">MAC addres</th>
-                <th scope="col">Classroom</th>
-                <th scope="col">Place</th>
-                <th scope="col">Edit</th>
+                <th scope="col">Тип</th>
+                <th scope="col">MAC-адрес</th>
+                <th scope="col">Кабинет</th>
+                <th scope="col">Номер места</th>
+                <th scope="col">Редактирование</th>
             </tr>
         </thead>
         <tbody>
@@ -31,11 +31,11 @@
                             <button type="button"
                                     class="btn btn-info"
                                     onclick="editRow(@pc.PcId, '@pc.PcType', '@pc.Macaddr', @Model.GetClassNum(pc.CrId.GetValueOrDefault()), @Model.GetPlaceNum(pc.CrId.GetValueOrDefault()))">
-                                Edit
+                                Ред.
                             </button>
                             <button type="submit" class="btn btn-info" data-toggle="modal"
                                     asp-page-handler="delete" asp-route-id="@pc.PcId">
-                                Remove
+                                Удалить
                             </button>
                         </form>
                     </td>
@@ -54,14 +54,14 @@
         <form class="modal-content" method="post">
             <input type="hidden" name="_method" value="post" />
             <div class="modal-header">
-                <h5 class="modal-title">Add PC</h5>
+                <h5 class="modal-title">Добавить ПК</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="pctypeInput">Type</label>
+                    <label for="pctypeInput">Тип</label>
                     <select class="form-control" name="pctype" id="pctypeInput" asp-for="PcItem.PcType" required>
                         <option value="Компьютер">Компьютер</option>
                         <option value="Ноутбук">Ноутбук</option>
@@ -69,22 +69,22 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="macaddrInput">MAC addres</label>
+                    <label for="macaddrInput">MAC-адрес</label>
                     <input type="text" class="form-control" name="macaddr" id="macaddrInput" asp-for="PcItem.Macaddr" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="classnumInput">Classroom</label>
+                    <label for="classnumInput">Кабинет</label>
                     <input type="text" class="form-control" name="_classnum" id="classnumInput" asp-for="PcItem.CrId">
                 </div>
 
                 <div class="form-group">
-                    <label for="placenumInput">Place</label>
+                    <label for="placenumInput">Номер места</label>
                     <input type="text" class="form-control" name="_placenum" id="placenumInput" asp-for="PcItem.CrId">
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" value="Add" style="float:right" />
+                <input type="submit" class="btn btn-primary" value="Добавить" style="float:right" />
             </div>
         </form>
     </div>
@@ -99,14 +99,14 @@
             <input type="hidden" name="_method" value="put" />
             <input type="hidden" name="_id" id="editItemId" />
             <div class="modal-header">
-                <h5 class="modal-title">Edit PC</h5>
+                <h5 class="modal-title">Редактирование ПК</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Type</label>
+                    <label>Тип</label>
                     <div>
                         <span asp-validation-for="PcItem.PcType" />
                         <select class="form-control" name="pctype" id="pctypeField" asp-for="PcItem.PcType" required>
@@ -118,7 +118,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>MAC addres</label>
+                    <label>MAC-адрес</label>
                     <div>
                         <input type="text" id="macaddrField" class="form-control" name="macaddr" asp-for="PcItem.Macaddr" required>
                         <span asp-validation-for="PcItem.Macaddr" />
@@ -126,7 +126,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Classroom</label>
+                    <label>Кабинет</label>
                     <div>
                         <input type="text" id="classnumField" class="form-control" name="_classnum" asp-for="PcItem.CrId">
                         <span asp-validation-for="PcItem.CrId" />
@@ -134,7 +134,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Place</label>
+                    <label>Номер места</label>
                     <div>
                         <input type="text" id="placenumField" class="form-control" name="_placenum" asp-for="PcItem.CrId">
                         <span asp-validation-for="PcItem.CrId" />
@@ -142,7 +142,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" value="Save" style="float:right" />
+                <input type="submit" class="btn btn-primary" value="Сохранить" style="float:right" />
             </div>
         </form>
     </div>

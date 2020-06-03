@@ -19,9 +19,15 @@ namespace RepconWeb
         {
             string connection = Configuration.GetConnectionString("DatabaseConnection");
             services.AddDbContext<RepconContext>(options => options.UseSqlServer(connection));
-            services.AddRazorPages().AddMvcOptions(options => {
-                options.Filters.Add(new AuthAsyncPageFilter(Configuration));
+            //services.AddRazorPages().AddMvcOptions(options =>
+            //{
+            //    options.Filters.Add(new AuthAsyncPageFilter(Configuration));
+            //});
+            services.AddMvc().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AddPageRoute("/Login", "");
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

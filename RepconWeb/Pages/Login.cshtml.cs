@@ -18,8 +18,8 @@ namespace RepconWeb
 
 		private const string ErrorMessageTemplate = @"
 			<div class=""alert alert-danger"" role=""alert"">{0}</div>";
-		private const string IncorrectUandPErrorMessageTemplate = @"Incorrect login or password.";
-		private const string UNFMessageTemplate = @"User not found!";
+		private const string IncorrectUandPErrorMessageTemplate = @"Неверный логин или пароль.";
+		private const string UNFMessageTemplate = @"Пользователь не найден!";
 
 		#endregion Variables and Constants
 
@@ -36,7 +36,7 @@ namespace RepconWeb
 				if (admn.Pwd == password)
 				{
 					ResultMessage = string.Empty;
-					return RedirectToPage("Index");
+					return RedirectToPage("Main");
 				}
 				else
 				    ResultMessage = string.Format(ErrorMessageTemplate, IncorrectUandPErrorMessageTemplate);

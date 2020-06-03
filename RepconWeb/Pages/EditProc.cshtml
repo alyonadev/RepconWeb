@@ -4,18 +4,18 @@
     ViewData["Title"] = "Edit Process";
 }
 
-<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#newItemModal">Add program</button>
+<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#newItemModal">Добавить программу</button>
 <p />
 
 <div class="text-center">
     <table id="ProcessTable" class="table table-hover" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Status</th>
-                <th scope="col">Size</th>
-                <th scope="col">Edit</th>
+                <th scope="col">Название</th>
+                <th scope="col">Описание</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Размер</th>
+                <th scope="col">Редактирование</th>
             </tr>
         </thead>
         <tbody>
@@ -31,11 +31,11 @@
                             <button type="button"
                                     class="btn btn-info"
                                     onclick="editRow(@proc.ProcId, '@proc.Name', '@proc.Description', '@proc.Status', @proc.Size)">
-                                Edit
+                                Ред.
                             </button>
                             <button type="submit" class="btn btn-info" data-toggle="modal"
                                     asp-page-handler="delete" asp-route-id="@proc.ProcId">
-                                Remove
+                                Удалить
                             </button>
                         </form>
                     </td>
@@ -54,24 +54,24 @@
         <form class="modal-content" method="post">
             <input type="hidden" name="_method" value="post" />
             <div class="modal-header">
-                <h5 class="modal-title">Add program</h5>
+                <h5 class="modal-title">Добавить программу</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="nameInput">Name</label>
+                    <label for="nameInput">Название</label>
                     <input type="text" class="form-control" name="name" id="nameInput" asp-for="ProcessItem.Name" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="descriptionInput">Description</label>
+                    <label for="descriptionInput">Описание</label>
                     <input type="text" class="form-control" name="description" id="descriptionInput" asp-for="ProcessItem.Description">
                 </div>
 
                 <div class="form-group">
-                    <label for="statusInput">Status</label>
+                    <label for="statusInput">Статус</label>
                     <select class="form-control" name="status" id="statusInput" asp-for="ProcessItem.Status" required>
                         <option value="Не извесный">Не извесный</option>
                         <option value="Извесный">Извесный</option>
@@ -80,12 +80,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="sizeInput">Size</label>
+                    <label for="sizeInput">Размер</label>
                     <input type="text" class="form-control" name="size" id="sizeInput" asp-for="ProcessItem.Size" required>
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" value="Add" style="float:right" />
+                <input type="submit" class="btn btn-primary" value="Добавить" style="float:right" />
             </div>
         </form>
     </div>
@@ -100,14 +100,14 @@
             <input type="hidden" name="_method" value="put" />
             <input type="hidden" name="_id" id="editItemId" />
             <div class="modal-header">
-                <h5 class="modal-title">Edit programm</h5>
+                <h5 class="modal-title">Редактирование программы</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Name</label>
+                    <label>Название</label>
                     <div>
                         <input type="text" id="nameField" class="form-control" name="name" asp-for="ProcessItem.Name" required>
                         <span asp-validation-for="ProcessItem.Name" />
@@ -115,7 +115,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Description</label>
+                    <label>Описание</label>
                     <div>
                         <input type="text" id="descrField" class="form-control" name="description" asp-for="ProcessItem.Description">
                         <span asp-validation-for="ProcessItem.Description" />
@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Status</label>
+                    <label>Статус</label>
                     <div>
                         <span asp-validation-for="ProcessItem.Status" />
                         <select class="form-control" name="status" id="statusField" asp-for="ProcessItem.Status" required>
@@ -136,7 +136,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Size</label>
+                    <label>Размер</label>
                     <div>
                         <input type="text" id="sizeField" class="form-control" name="size" asp-for="ProcessItem.Size" required>
                         <span asp-validation-for="ProcessItem.Size" />
@@ -144,7 +144,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" value="Save" style="float:right" />
+                <input type="submit" class="btn btn-primary" value="Сохранить" style="float:right" />
             </div>
         </form>
     </div>
